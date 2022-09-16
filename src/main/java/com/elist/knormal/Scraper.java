@@ -20,9 +20,9 @@ public class Scraper {
     }
 
     public static void scrape(Context context) {
-        //ERestClient client = ERestClient.getInstance();
-        //find(client.doRequest(SHOPRITE_URL));
-        context.result("Hello world!");
+        ERestClient client = ERestClient.getInstance();
+        find(client.doRequest(SHOPRITE_URL));
+        //context.result("Hello world!");
     }
 
     private static String find(String html) {
@@ -46,7 +46,7 @@ public class Scraper {
             String productString =  html.substring(productIndex);
             productString = productString.substring(0, 1 + productString.indexOf("}"));
             JSONObject jsonObject = new JSONObject(productString);
-            System.out.println(productString);
+            //System.out.println(productString);
         }
 
         return null;
