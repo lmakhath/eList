@@ -11,6 +11,8 @@ public class App
 {
     public static void main(String[] args) {
         Javalin app = Javalin.create().start(7070);
-        app.get("/", ctx -> Scraper.scrape(ctx));
+        app.get("/scrape", ctx -> Scraper.scrape(ctx));
+        app.get("/refresh", ctx -> ItemController.refreshItemList(ctx));
+        app.get("/items", ctx -> ItemController.getItems(ctx));
     }
 }

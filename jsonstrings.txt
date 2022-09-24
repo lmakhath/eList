@@ -1,0 +1,20 @@
+{"id": "10725085EA", "name": "Huletts Sun Sweet Brown Sugar 2kg", "price": "49.99", "brand": "", "category": "", "position": "1", "variant": "", "list": ""}
+{"id": "10145186EA", "name": "Small/Medium Avocado", "price": "6.99", "brand": "", "category": "", "position": "1", "variant": "", "list": ""}
+{"id": "10125600EA", "name": "Carling Black Label Beer Bottle 750ml", "price": "19.99", "brand": "", "category": "", "position": "1", "variant": "", "list": ""}
+{"id": "10185083EA", "name": "Lucky Star Pilchards In Tomato Sauce Tin 400g", "price": "24.99", "brand": "", "category": "", "position": "1", "variant": "", "list": ""}
+{"id": "10538316EA", "name": "County Fair Frozen Chicken Mixed Portions With Brine Based Mixture 5kg", "price": "214.99", "brand": "", "category": "", "position": "1", "variant": "", "list": ""}
+{"id": "10730757EA", "name": "Caress Regular Maxi Sanitary Pads 8 Pack", "price": "5.0", "brand": "", "category": "", "position": "1", "variant": "", "list": ""}
+{"id": "10152390EA", "name": "Carrots Bag 1kg", "price": "7.2", "brand": "", "category": "", "position": "1", "variant": "", "list": ""}
+{"id": "10125599EA", "name": "Castle Lager Beer Bottle 750ml", "price": "16.99", "brand": "", "category": "", "position": "1", "variant": "", "list": ""}
+{"id": "10151456EA", "name": "White Hamburger Roll", "price": "2.69", "brand": "", "category": "", "position": "1", "variant": "", "list": ""}
+{"id": "10141800EA", "name": "Selati Pure White Sugar Bag 2.5kg", "price": "51.99", "brand": "", "category": "", "position": "1", "variant": "", "list": ""}
+{"id": "10127467EA", "name": "Crystal Valley Fresh Full Cream Milk Sachet 1L", "price": "11.99", "brand": "", "category": "", "position": "1", "variant": "", "list": ""}
+{"id": "10138799EA", "name": "White Star Super Maize Meal 2.5kg", "price": "35.99", "brand": "", "category": "", "position": "1", "variant": "", "list": ""}
+{"id": "10151458EA", "name": "White Hot Dog Roll Single", "price": "2.69", "brand": "", "category": "", "position": "1", "variant": "", "list": ""}
+{"id": "10136669EA", "name": "Coca-Cola Original Less Sugar Soft Drink Bottle 2L", "price": "23.89", "brand": "", "category": "", "position": "1", "variant": "", "list": ""}
+{"id": "10161754EA", "name": "Nola Original Mayonnaise Jar 750g", "price": "37.99", "brand": "", "category": "", "position": "1", "variant": "", "list": ""}
+{"id": "10124088EA", "name": "Mr. Pasta Macaroni Pasta 500g", "price": "14.99", "brand": "", "category": "", "position": "1", "variant": "", "list": ""}
+{"id": "10153949EA", "name": "Marvello Original Baking Margarine Brick 500g", "price": "25.99", "brand": "", "category": "", "position": "1", "variant": "", "list": ""}
+{"id": "10241931EA", "name": "Sasko More Slices Brown Bread Loaf 700g", "price": "15.99", "brand": "", "category": "", "position": "1", "variant": "", "list": ""}
+{"id": "10241181EA", "name": "Onions Bag 1kg", "price": "19.99", "brand": "", "category": "", "position": "1", "variant": "", "list": ""}
+{"id": "10137752EA", "name": "Ritebrand Baked Beans In Tomato Sauce Can 410g", "price": "9.99", "brand": "", "category": "", "position": "1", "variant": "", "list": ""}
