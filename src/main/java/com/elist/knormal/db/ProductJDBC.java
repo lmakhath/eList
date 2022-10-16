@@ -11,14 +11,15 @@ import java.util.List;
 public class ProductJDBC {
     private Connection conn;
     private static ProductJDBC instance;
-    private static final String SHOPRITE_INSERT = "INSERT INTO shoprite_items(code, name, price, created_on) values (?,?,?,?)";
-    private static final String SELECT_SHOPRITE_ITEMS = "Select * from shoprite_items";
+    private static final String SR_INSERT = "INSERT INTO shoprite_items(code, name, price, created_on) values (?,?,?,?)";
+    private static final String SR_UPDATE = "UPDATE shoprite_items set name = ?, price = ? where code = ?";
+    private static final String SELECT_SR_ITEMS = "Select * from shoprite_items";
     private static final String POSTGRES_URL = "jdbc:postgresql://localhost:5432/grocerylistdb";
 
     private ProductJDBC() {
         try {
             Class.forName("org.postgresql.Driver");
-            conn = DriverManager.getConnection(POSTGRES_URL, "postgres","19230M@rs");
+            conn = DriverManager.getConnection(POSTGRES_URL, "postgres", "19230M@rs");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -32,9 +33,10 @@ public class ProductJDBC {
     }
 
     public void insertShopriteItemsList(List<JSONObject> objectList) {
-        int i = 0;
         for (JSONObject jo : objectList) {
-            shopriteInsert(jo, i++);
+            if (shopriteInsert(jo) == 0 && BeanList.getInstance().checkForUpdate(jo)) {
+                updateShopriteItem(jo);
+            }
         }
     }
 
@@ -45,9 +47,9 @@ public class ProductJDBC {
 
         try {
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery(SELECT_SHOPRITE_ITEMS);
+            ResultSet rs = stm.executeQuery(SELECT_SR_ITEMS);
 
-            while(rs.next()) {
+            while (rs.next()) {
                 ShopriteBean bean = new ShopriteBean();
                 bean.setCode(rs.getString("code"));
                 bean.setName(rs.getString("name"));
@@ -64,18 +66,34 @@ public class ProductJDBC {
         return true;
     }
 
-    public void shopriteInsert(JSONObject jo, int i) {
-
+    public int shopriteInsert(JSONObject jo) {
+        int n = 0;
         try {
-            PreparedStatement pstmt = conn.prepareStatement(SHOPRITE_INSERT, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement pstmt = conn.prepareStatement(SR_INSERT, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, jo.getString("id"));
             pstmt.setString(2, jo.getString("name"));
             pstmt.setString(3, jo.getString("price"));
             pstmt.setTimestamp(4, new java.sql.Timestamp(new java.util.Date().getTime()));
 
-            pstmt.executeUpdate();
-        } catch(SQLException e) {
+            n = pstmt.executeUpdate();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+        return n;
+    }
+
+    private int updateShopriteItem (JSONObject jo){
+        int n = 0;
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(SR_UPDATE, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, jo.getString("name"));
+            pstmt.setString(2, jo.getString("price"));
+            pstmt.setString(3, jo.getString("id"));
+
+            n = pstmt.executeUpdate();
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return n;
     }
 }

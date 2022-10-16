@@ -17,4 +17,5 @@
 {"id": "10153949EA", "name": "Marvello Original Baking Margarine Brick 500g", "price": "25.99", "brand": "", "category": "", "position": "1", "variant": "", "list": ""}
 {"id": "10241931EA", "name": "Sasko More Slices Brown Bread Loaf 700g", "price": "15.99", "brand": "", "category": "", "position": "1", "variant": "", "list": ""}
 {"id": "10241181EA", "name": "Onions Bag 1kg", "price": "19.99", "brand": "", "category": "", "position": "1", "variant": "", "list": ""}
-{"id": "10137752EA", "name": "Ritebrand Baked Beans In Tomato Sauce Can 410g", "price": "9.99", "brand": "", "category": "", "position": "1", "variant": "", "list": ""}
+{"id": "10137752EA", "name": "Ritebrand Baked Beans In Tomato Sauce Can 410g", "price": "10.99", "brand": "", "category": "", "position": "1", "variant": "", "list": ""}
+{"id": "10137752EA", "name": "Ritebrand Baked Beans In Tomato Sauce Can 410g", "price": "8.99", "brand": "", "category": "", "position": "1", "variant": "", "list": ""}
