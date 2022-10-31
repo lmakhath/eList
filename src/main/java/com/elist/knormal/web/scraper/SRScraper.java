@@ -3,22 +3,16 @@ package com.elist.knormal.web.scraper;
 import com.elist.knormal.ItemController;
 import com.elist.knormal.beans.ShopriteBean;
 import com.elist.knormal.client.ERestClient;
+import com.elist.knormal.commons.ShopriteCommons;
 import com.elist.knormal.db.ProductJDBC;
 import io.javalin.http.Context;
 import org.json.JSONObject;
-
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import java.util.Date;
 
 public class SRScraper extends Scraper {
-    private static final String SHOPRITE_URL = "https://www.shoprite.co.za/c-2256/All-Departments?q=%3Arelevance%3AbrowseAllStoresFacetOff%3AbrowseAllStoresFacetOff&page=";
-    private static final String FIND_TAG = "hidden productListJSON";
-    private static final String FIND_TAG_PRODUCT = "product-frame product-ga product_";
     private ShopriteBean shopriteBean;
     private static ProductJDBC jdbcObject = ProductJDBC.getInstance();
     private static List<JSONObject> jList = new ArrayList<>();
@@ -27,31 +21,20 @@ public class SRScraper extends Scraper {
     public void scrape(Context context) {
         ItemController.refreshItemList(context);
         ERestClient client = ERestClient.getInstance();
-        for (int i = 0; i < 500; i++) {
-            Date start = new Date();
-            findProducts(client.doGetRequest(SHOPRITE_URL + i));
-            System.out.println(SHOPRITE_URL + i);
-            requestDelay(start, 10000);
-        }
-        jdbcObject.insertShopriteItemsList(jList);
-        //test();
-    }
-
-    /*private static void test() {
-        try {
-            Scanner sc = new Scanner(new File("jsonstrings.txt"));
-            while(sc.hasNextLine()) {
-                //System.out.println(sc.nextLine());
-                String tmp = sc.nextLine();
-                System.out.println(tmp);
-                jList.add(new JSONObject(tmp));
+        int j = 0;
+        for (String base : ShopriteCommons.BASE_URLS) {
+            int totalNumberOfItems = findTotalItems(client, base) / 20;
+            String[] links = ShopriteCommons.LINKS;
+            for (int i = 0; i < totalNumberOfItems; i++) {
+                Date start = new Date();
+                findProducts(client.doGetRequest(links[j] + i));
+                System.out.println(links[j] + i);
+                requestDelay(start, 10000);
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            j++;
         }
-
         jdbcObject.insertShopriteItemsList(jList);
-    }*/
+    }
 
     @Override
     public final void findProducts(String html) {
@@ -74,10 +57,23 @@ public class SRScraper extends Scraper {
             int productIndex = 62 +  html.indexOf(FIND_TAG_PRODUCT + tmp);
             String productString =  html.substring(productIndex);
             productString = productString.substring(0, 1 + productString.indexOf("}"));
-            //System.out.println(productString);
             JSONObject jsonObject = new JSONObject(checkJson(productString));
             jList.add(jsonObject);
         }
+    }
+
+    @Override
+    public int findTotalItems(ERestClient client, String base) {
+        //find the number of items.
+        String html = client.doGetRequest(base);
+        html = html.substring(html.indexOf(ShopriteCommons.NUMBER_OF_ITEMS));
+        String items = html.substring(ShopriteCommons.NUMBER_OF_ITEMS.length() + 3, html.indexOf("items") - 1);
+        StringBuilder stringBuilder = new StringBuilder(items);
+        while(!isDigit(stringBuilder)) {
+            stringBuilder.deleteCharAt(items.indexOf(","));
+        }
+        System.out.println(stringBuilder);
+        return Integer.parseInt(stringBuilder.toString());
     }
 
     private final String checkJson(String productString) {
