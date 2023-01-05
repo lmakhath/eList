@@ -6,12 +6,13 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShopriteBean {
+public class ShopBean {
 
     private String code;
     private String name;
     private String price;
     private Timestamp timestamp;
+    private ShopEnums shop;
 
     public void setCode(String code) {
         this.code = code;
@@ -29,6 +30,10 @@ public class ShopriteBean {
         this.timestamp = timestamp;
     }
 
+    public void setShop(ShopEnums shop) {
+        this.shop = shop;
+    }
+
     public String getCode() {
         return code;
     }
@@ -43,5 +48,9 @@ public class ShopriteBean {
 
     public Timestamp getTimestamp() {
         return timestamp;
+    }
+
+    public ShopEnums getShop() {
+        return shop;
     }
 }

@@ -1,7 +1,8 @@
 package com.elist.knormal.db;
 
 import com.elist.knormal.beans.BeanList;
-import com.elist.knormal.beans.ShopriteBean;
+import com.elist.knormal.beans.ShopBean;
+import com.elist.knormal.beans.ShopEnums;
 import org.json.JSONObject;
 
 import java.sql.*;
@@ -14,7 +15,14 @@ public class ProductJDBC {
     private static final String SR_INSERT = "INSERT INTO shoprite_items(code, name, price, created_on) values (?,?,?,?)";
     private static final String SR_UPDATE = "UPDATE shoprite_items set name = ?, price = ? where code = ?";
     private static final String SELECT_SR_ITEMS = "Select * from shoprite_items";
+    private static final String SELECT_MAKRO_ITEMS = "Select * from makro_items";
+    private static final String SELECT_CHECKERS_ITEMS = "Select * from checkers_items";
+    private static final String SELECT_BOXER_ITEMS = "Select * from boxer_items";
+    private static final String SELECT_PNP_ITEMS = "Select * from pnp_items";
+    private static final String SELECT_WOOLWORTHS_ITEMS = "Select * from woolworths_items";
+    private static final String SELECT_SPAR_ITEMS = "Select * from spar_items";
     private static final String POSTGRES_URL = "jdbc:postgresql://localhost:5432/grocerylistdb";
+    private List<ShopBean> list = new ArrayList<>();
 
     private ProductJDBC() {
         try {
@@ -43,27 +51,40 @@ public class ProductJDBC {
     public boolean selectAllShopriteItems() {
 
         BeanList instance = BeanList.getInstance();
-        List<ShopriteBean> list = new ArrayList<>();
+        int selectCount = 0;
 
+        selectCount += selectItems(SELECT_SR_ITEMS, ShopEnums.SHOPRITE);
+        selectCount += selectItems(SELECT_MAKRO_ITEMS, ShopEnums.MAKRO);
+        selectCount += selectItems(SELECT_CHECKERS_ITEMS, ShopEnums.CHECKERS);
+        selectCount += selectItems(SELECT_BOXER_ITEMS, ShopEnums.BOXER);
+        selectCount += selectItems(SELECT_PNP_ITEMS, ShopEnums.PICKNPAY);
+        selectCount += selectItems(SELECT_SPAR_ITEMS, ShopEnums.SPAR);
+        selectCount += selectItems(SELECT_WOOLWORTHS_ITEMS, ShopEnums.WOOLWORTHS);
+        instance.setBean(list);
+        if (selectCount < 7)
+            return false;
+        return true;
+    }
+
+    private int selectItems(String statement, ShopEnums shop) {
         try {
             Statement stm = conn.createStatement();
-            ResultSet rs = stm.executeQuery(SELECT_SR_ITEMS);
+            ResultSet rs = stm.executeQuery(statement);
 
             while (rs.next()) {
-                ShopriteBean bean = new ShopriteBean();
+                ShopBean bean = new ShopBean();
                 bean.setCode(rs.getString("code"));
                 bean.setName(rs.getString("name"));
                 bean.setPrice(rs.getString("price"));
                 bean.setTimestamp(rs.getTimestamp("created_on"));
+                bean.setShop(shop);
                 list.add(bean);
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+            return 0;
         }
-        instance.setBean(list);
-        return true;
+        return 1;
     }
 
     public int shopriteInsert(JSONObject jo) {

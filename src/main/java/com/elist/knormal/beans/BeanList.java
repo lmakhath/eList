@@ -8,7 +8,7 @@ import java.util.List;
 public class BeanList {
 
     private static BeanList instance;
-    private List<ShopriteBean> list;
+    private List<ShopBean> list;
 
     private BeanList() {
         list = new ArrayList<>();
@@ -20,17 +20,17 @@ public class BeanList {
         return instance;
     }
 
-    public void setBean(List<ShopriteBean> list) {
+    public void setBean(List<ShopBean> list) {
         this.list = list;
     }
 
-    public List<ShopriteBean> getList() {
+    public List<ShopBean> getList() {
         return list;
     }
 
     public boolean checkForUpdate(JSONObject jObject) {
-        ShopriteBean tmp = null;
-        for (ShopriteBean bean : list) {
+        ShopBean tmp = null;
+        for (ShopBean bean : list) {
             if (bean.getCode().equalsIgnoreCase(jObject.getString("id"))) {
                 tmp = bean;
             }
@@ -38,7 +38,7 @@ public class BeanList {
         if (tmp != null) {
             if(!jObject.getString("name").equalsIgnoreCase(tmp.getName())
                     || !jObject.getString("price").equalsIgnoreCase(tmp.getPrice())) {
-                ShopriteBean bean = new ShopriteBean();
+                ShopBean bean = new ShopBean();
                 bean.setCode(tmp.getCode());
                 bean.setName(jObject.getString("name"));
                 bean.setPrice(jObject.getString("price"));

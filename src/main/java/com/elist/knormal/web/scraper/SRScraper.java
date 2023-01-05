@@ -1,7 +1,7 @@
 package com.elist.knormal.web.scraper;
 
 import com.elist.knormal.ItemController;
-import com.elist.knormal.beans.ShopriteBean;
+import com.elist.knormal.beans.ShopBean;
 import com.elist.knormal.client.ERestClient;
 import com.elist.knormal.commons.ShopriteCommons;
 import com.elist.knormal.db.ProductJDBC;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Date;
 
 public class SRScraper extends Scraper {
-    private ShopriteBean shopriteBean;
+    private ShopBean shopBean;
     private static ProductJDBC jdbcObject = ProductJDBC.getInstance();
     private static List<JSONObject> jList = new ArrayList<>();
 
@@ -69,7 +69,7 @@ public class SRScraper extends Scraper {
         html = html.substring(html.indexOf(ShopriteCommons.NUMBER_OF_ITEMS));
         String items = html.substring(ShopriteCommons.NUMBER_OF_ITEMS.length() + 3, html.indexOf("items") - 1);
         StringBuilder stringBuilder = new StringBuilder(items);
-        while(!isDigit(stringBuilder)) {
+        while(!items.matches("\\d")) { //check if string is digits.
             stringBuilder.deleteCharAt(items.indexOf(","));
         }
         System.out.println(stringBuilder);

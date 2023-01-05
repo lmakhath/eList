@@ -27,13 +27,4 @@ public abstract class Scraper {
             e.printStackTrace();
         }
     }
-
-    public boolean isDigit(StringBuilder sb) {
-
-        for (int i = 0; i < sb.length(); i++) {
-            if (sb.charAt(i) < '0' || sb.charAt(i) > '9')
-                return false;
-        }
-        return true;
-    }
 }
